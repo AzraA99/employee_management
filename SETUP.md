@@ -15,16 +15,14 @@ This is a complete implementation of the Employee Management application with An
 - PostgreSQL 12+
 - Maven 3.9+
 
-1. Update database credentials in `backend/src/main/resources/application.properties` if needed.
-
 ## Backend Setup
 
-2.  Navigate to the backend directory:
+1.  Navigate to the backend directory:
 ```bash
 cd backend
 ```
 
-3. Run the application:
+2. Run the application:
 ```bash
 ./mvnw compile quarkus:dev
 ```
