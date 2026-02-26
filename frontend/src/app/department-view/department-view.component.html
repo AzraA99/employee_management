@@ -1,0 +1,130 @@
+<div class="department-view">
+  <div class="header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1 *ngIf="department">{{ department.name }}</h1>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Search employees in this department..."
+        class="search-input"
+      />
+      <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search">Clear</button>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="loading" class="loading">
+    Loading employees...
+  </div>
+
+  <!-- Employees Section -->
+  <div class="employees-section" *ngIf="!loading">
+    <div class="section-header">
+      <h2>Employees ({{ employees.length }})</h2>
+      <button class="add-employee-btn" (click)="showAddEmployee()">Add Employee</button>
+    </div>
+
+    <div *ngIf="employees.length === 0" class="empty-state">
+      <p *ngIf="!searchQuery">No employees in this department.</p>
+      <p *ngIf="searchQuery">No employees found matching "{{ searchQuery }}".</p>
+    </div>
+
+    <div class="employee-list">
+      <div
+        *ngFor="let employee of employees"
+        class="employee-card"
+        [class.highlighted]="isEmployeeHighlighted(employee.id)"
+      >
+        <div class="employee-info">
+          <h3 class="employee-name">{{ employee.fullName }}</h3>
+          <div class="employee-details">
+            <div *ngIf="employee.email" class="detail">
+              <span class="label">Email:</span>
+              <span class="value">{{ employee.email }}</span>
+            </div>
+            <div *ngIf="employee.phone" class="detail">
+              <span class="label">Phone:</span>
+              <span class="value">{{ employee.phone }}</span>
+            </div>
+            <div *ngIf="employee.address" class="detail">
+              <span class="label">Address:</span>
+              <span class="value">{{ employee.address }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="employee-actions">
+          <button class="delete-btn" (click)="deleteEmployee(employee, $event)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Employee Modal -->
+  <div *ngIf="showAddEmployeeModal" class="modal-overlay" (click)="hideAddEmployee()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Add New Employee</h3>
+      <form (ngSubmit)="addEmployee()">
+        <div class="form-group">
+          <label for="fullName">Full Name *</label>
+          <input
+            type="text"
+            id="fullName"
+            [(ngModel)]="newEmployee.fullName"
+            name="fullName"
+            required
+            class="form-input"
+            placeholder="Enter full name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="newEmployee.email"
+            name="email"
+            class="form-input"
+            placeholder="Enter email address"
+          />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input
+            type="tel"
+            id="phone"
+            [(ngModel)]="newEmployee.phone"
+            name="phone"
+            class="form-input"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea
+            id="address"
+            [(ngModel)]="newEmployee.address"
+            name="address"
+            class="form-input"
+            placeholder="Enter address"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="hideAddEmployee()" class="cancel-btn">Cancel</button>
+          <button type="submit" class="add-btn">Add Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

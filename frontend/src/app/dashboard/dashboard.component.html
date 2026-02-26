@@ -1,0 +1,83 @@
+<div class="dashboard">
+  <h1>Employee Management Dashboard</h1>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Search employees by name..."
+        class="search-input"
+      />
+      <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search">Clear</button>
+    </div>
+
+    <!-- Search Results -->
+    <div *ngIf="searchResults.length > 0" class="search-results">
+      <h3>Search Results</h3>
+      <div class="employee-list">
+        <div
+          *ngFor="let employee of searchResults"
+          class="employee-item"
+          (click)="navigateToEmployee(employee)"
+        >
+          <span class="employee-name">{{ employee.fullName }}</span>
+          <span class="employee-department">{{ employee.departmentName || 'Unassigned' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="loading" class="loading">
+    Loading departments...
+  </div>
+
+  <!-- Departments -->
+  <div class="departments-section" *ngIf="!loading">
+    <h2>Departments</h2>
+    <div class="departments">
+      <div
+        *ngFor="let department of departments"
+        class="department-card"
+        (click)="navigateToDepartment(department)"
+      >
+        <span class="count">{{ department.employeeCount }}</span>
+        <p>{{ department.name }}</p>
+        <a
+          *ngIf="department.id !== null"
+          class="delete-link"
+          (click)="deleteDepartment(department, $event)"
+          href="#"
+        >Delete</a>
+      </div>
+    </div>
+
+    <button class="add-department" (click)="showAddDepartment()">Add Department</button>
+  </div>
+
+  <!-- Add Department Modal -->
+  <div *ngIf="showAddDepartmentModal" class="modal-overlay" (click)="hideAddDepartment()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Add New Department</h3>
+      <input
+        type="text"
+        [(ngModel)]="newDepartmentName"
+        placeholder="Department name"
+        class="modal-input"
+        (keyup.enter)="addDepartment()"
+      />
+      <div class="modal-actions">
+        <button (click)="hideAddDepartment()" class="cancel-btn">Cancel</button>
+        <button (click)="addDepartment()" class="add-btn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
