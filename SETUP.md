@@ -6,7 +6,7 @@ This is a complete implementation of the Employee Management application with An
 
 - **Backend**: Quarkus with PostgreSQL, Hibernate ORM, RESTful APIs
 - **Frontend**: Angular with HTTP client for API communication
-- **Database**: PostgreSQL with Flyway migrations
+- **Database**: H2 in-memory database
 
 ## Prerequisites
 
