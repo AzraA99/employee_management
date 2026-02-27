@@ -93,7 +93,7 @@ npm test
 ### Backend Features
 - ✅ Full CRUD for departments and employees
 - ✅ Proper error handling and validation
-- ✅ Database migrations with sample data
+- ✅ Database migrations with sample data -> The application uses an in-memory database as its data store, which is inherently temporary and exists only for the duration of the application's runtime. Database migrations have been implemented to reflect a real-world production setup, where a persistent database would require proper schema versioning and change management.
 - ✅ CORS configuration for frontend
 - ✅ Comprehensive unit tests
 
