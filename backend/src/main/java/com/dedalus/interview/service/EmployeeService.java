@@ -103,8 +103,10 @@ public class EmployeeService {
             Department department = departmentRepository.findByIdOptional(employeeUpdate.getDepartmentId())
                     .orElseThrow(() -> new BadRequestException("Department not found with id: " + employeeUpdate.getDepartmentId()));
             existingEmployee.setDepartment(department);
-        } else if (employeeUpdate.getDepartment() == null) {
-            existingEmployee.setDepartment(null);
+        }
+
+        if (existingEmployee.getDepartment() != null) {
+            existingEmployee.getDepartment().getName();
         }
 
         logger.info("Updated employee: " + existingEmployee.getFullName());
